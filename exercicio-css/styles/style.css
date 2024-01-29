@@ -51,6 +51,8 @@ section h2 {
 
 .articles article img {
     width: 100%;
+    height: 193px;
+    object-fit: cover;
 }
 
 .articles article h3 {
