@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>Exercicio JS-HTML DOM</title>
+</head>
+<body>
+    <div>
+        <h1>Formulário A / B</h1>
+        <p>Digite um valor numérico para o Campo A e o Campo B, onde A é menor que B.</p>
+        <form id="form">
+            <label for="numberA">Campo A: <input type="number" id="numberA" required placeholder="Valor de A"></label>
+            <label for="numberB">Campo B: <input type="number" id="numberB" required disabled="true" placeholder="Valor de B"></label>
+            <p id="value-error" class="hide">O valor de B deve ser maior que o de A</p>
+            <button id="btn-submit" class="disabled" type="submit" disabled="true">Submeter</button>
+            <p id="sucess-msg" class="hide"></p>
+        </form>
+    </div>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
