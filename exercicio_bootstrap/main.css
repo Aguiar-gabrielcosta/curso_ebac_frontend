@@ -1,0 +1,19 @@
+section {
+    max-width: 540px;
+    width: 100%;
+}
+
+input{
+    margin-bottom: 8px;
+}
+
+label.error{
+    color: red;
+    font-style: italic;
+    font-size: 0.8em;
+    margin-bottom: 8px;
+}
+
+label.error::before {
+    content: '*';
+}
