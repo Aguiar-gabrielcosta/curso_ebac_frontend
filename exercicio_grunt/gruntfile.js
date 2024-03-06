@@ -23,6 +23,76 @@ module.exports = function(grunt) {
                 }
             }
         },
+        copy: {
+            javascript: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: './src/scripts',
+                        src: ['./**/*.js'],
+                        dest: './dev/scripts/'
+                    }
+                ]
+            }
+        },
+        htmlmin: {
+            production: {
+                options: {
+                    removeComments: true,
+                    collapseWhitespace: true
+                },
+                files: {
+                    './prebuild/index.html': './src/index.html'
+                }
+            }
+        },
+        clean: ['./prebuild'],
+        replace: {
+            development: {
+                options: {
+                    patterns: [
+                        {
+                            match: 'ENDERECO_CSS',
+                            replacement: './styles/main.css'
+                        },
+                        {
+                            match: 'ENDERECO_JS',
+                            replacement: './scripts/main.js'
+                        }
+                    ]
+                },
+                files: [
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: ['./src/index.html'],
+                        dest: './dev/'
+                    }
+                ]
+            },
+            production: {
+                options: {
+                    patterns: [
+                        {
+                            match: 'ENDERECO_CSS',
+                            replacement: './styles/main.min.css'
+                        },
+                        {
+                            match: 'ENDERECO_JS',
+                            replacement: './scripts/main.min.js'
+                        }
+                    ]
+                },
+                files: [
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: ['./prebuild/index.html'],
+                        dest: './dist/'
+                    }
+                ]
+            }
+        },
         watch: {
             less: {
                 files: ['./src/styles/**/*.less'],
@@ -31,17 +101,10 @@ module.exports = function(grunt) {
             javascript: {
                 files: ['./src/scripts/**/*.js'],
                 tasks: ['copy:javascript']
-            }
-        },
-        copy: {
-            javascript: {
-                files: [
-                    {
-                        expand: true,
-                        src: ['./src/scripts/**/*.js'],
-                        dest: './dev/scripts/'
-                    }
-                ]
+            },
+            html: {
+                files: ['./src/**/*.html'],
+                tasks: ['replace:development']
             }
         }
     })
@@ -50,7 +113,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify')
     grunt.loadNpmTasks('grunt-contrib-watch')
     grunt.loadNpmTasks('grunt-contrib-copy')
+    grunt.loadNpmTasks('grunt-contrib-htmlmin')
+    grunt.loadNpmTasks('grunt-contrib-clean')
+    grunt.loadNpmTasks('grunt-replace')
 
     grunt.registerTask('default', ['watch'])
-    grunt.registerTask('build', ['less:production', 'uglify'])
+    grunt.registerTask('build', ['less:production', 'uglify', 'htmlmin:production', 'replace:production', 'clean'])
 }
